@@ -310,4 +310,55 @@ class DashboardController extends Controller
             'message' => 'Datos listos para exportar'
         ]);
     }
+
+    /**
+     * Muestra las supervisiones de un admin que también supervisa
+     */
+    public function misSupervisiones()
+    {
+        $user = auth()->user();
+
+        // Verificar que sea admin con permisos de supervisor
+        if (!$user->isAdmin() || !$user->es_supervisor) {
+            abort(403, 'No tienes estudiantes asignados. Contacta al administrador principal.');
+        }
+
+        // Obtener el registro de supervisor del admin
+        $supervisor = $user->supervisor;
+
+        if (!$supervisor) {
+            return redirect()
+                ->route('admin.dashboard')
+                ->with('error', 'No tienes un perfil de supervisor configurado.');
+        }
+
+        // Obtener estudiantes asignados con sus solicitudes activas
+        $estudiantes = $supervisor->solicitudes()
+            ->with(['user', 'documentos', 'supervisiones'])
+            ->whereIn('estado_solicitud', ['APROBADA', 'EN_PROCESO'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function($solicitud) {
+                return [
+                    'id' => $solicitud->id,
+                    'estudiante' => $solicitud->user->name ?? 'N/A',
+                    'cuenta' => $solicitud->numero_cuenta,
+                    'empresa' => $solicitud->nombre_empresa,
+                    'estado' => $solicitud->estado_solicitud,
+                    'fecha_inicio' => $solicitud->fecha_inicio,
+                    'fecha_fin' => $solicitud->fecha_fin,
+                    'supervisiones' => $solicitud->supervisiones->count(),
+                    'documentos' => $solicitud->documentos->count(),
+                ];
+            });
+
+        $stats = [
+            'total_estudiantes' => $estudiantes->count(),
+            'capacidad_maxima' => $supervisor->max_estudiantes,
+            'cupos_disponibles' => $supervisor->cupos_disponibles,
+            'porcentaje_ocupacion' => $supervisor->porcentaje_ocupacion,
+        ];
+
+        return view('admin.mis-supervisiones', compact('estudiantes', 'stats', 'supervisor'));
+    }
 }

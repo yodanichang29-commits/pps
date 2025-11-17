@@ -28,6 +28,11 @@ class ValidarRol
             abort(403, 'Usuario sin rol asignado.');
         }
 
+        // ✅ JERARQUÍA: Admin puede acceder a TODO
+        if ($user->rol === 'admin') {
+            return $next($request);
+        }
+
         // Verificar que el rol del usuario esté en los roles permitidos
         if (!in_array($user->rol, $roles, true)) {
             abort(403, 'No tienes permiso para acceder a esta sección.');

@@ -40,6 +40,13 @@ Route::middleware(['auth', 'verified', 'rol:admin'])
         Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/dashboard/reportes', [\App\Http\Controllers\Admin\DashboardController::class, 'reportes'])->name('dashboard.reportes');
         Route::get('/dashboard/exportar', [\App\Http\Controllers\Admin\DashboardController::class, 'exportarReporte'])->name('dashboard.exportar');
+
+        // ========================================
+        // MIS SUPERVISIONES (para admins que también supervisan)
+        // ========================================
+        Route::get('/mis-supervisiones', [\App\Http\Controllers\Admin\DashboardController::class, 'misSupervisiones'])
+            ->name('mis-supervisiones');
+
         // ========================================
         // GESTIÓN DE SOLICITUDES (MÓDULO COMPLETO)
         // ========================================
