@@ -10,7 +10,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 // Notificaciones personalizadas
 use App\Notifications\CustomVerifyEmail;
 use App\Notifications\CustomResetPassword;
@@ -20,7 +19,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
-    use HasRoles;
     use HasProfilePhoto;
     use HasTeams;
     use TwoFactorAuthenticatable;
@@ -98,21 +96,21 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Helpers basados en Spatie
+     * Helpers basados en el campo 'rol'
      */
     public function isAdmin(): bool
     {
-        return $this->hasRole('admin');
+        return $this->rol === 'admin';
     }
 
     public function isSupervisor(): bool
     {
-        return $this->hasRole('supervisor');
+        return $this->rol === 'supervisor';
     }
 
     public function isEstudiante(): bool
     {
-        return $this->hasRole('estudiante');
+        return $this->rol === 'estudiante';
     }
 
     /**

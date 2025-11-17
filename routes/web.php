@@ -33,7 +33,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // ======================= ADMIN =======================
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'rol:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -138,7 +138,7 @@ Route::middleware(['auth', 'verified'])
     });
 
 // =================== ESTUDIANTES ===================
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'rol:estudiante'])
     ->prefix('estudiantes')
     ->name('estudiantes.')
     ->group(function () {
@@ -197,7 +197,7 @@ Route::get('/formatos/{id}/view', [FormatoController::class, 'view'])
     });
 
 // ======================= SUPERVISOR =======================
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'rol:supervisor'])
     ->prefix('supervisor')
     ->name('supervisor.')
     ->group(function () {

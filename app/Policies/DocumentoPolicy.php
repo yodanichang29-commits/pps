@@ -27,8 +27,8 @@ class DocumentoPolicy
             return true;
         }
 
-        // Admin o Vinculación pueden ver todo
-        if ($user->hasRole('admin') || $user->hasRole('vinculacion')) {
+        // Admin puede ver todo (vinculación se maneja con rol 'admin' también)
+        if ($user->isAdmin()) {
             return true;
         }
 

@@ -49,7 +49,7 @@ class SolicitudController extends Controller
         $solicitud = SolicitudPPS::with('documentos:id,solicitud_pps_id,tipo,ruta,created_at')
             ->findOrFail($id);
 
-        if (!($user->id === $solicitud->user_id || $user->hasRole('admin') || $user->hasRole('supervisor'))) {
+        if (!($user->id === $solicitud->user_id || $user->isAdmin() || $user->isSupervisor())) {
             throw new AuthorizationException('No autorizado.');
         }
 
