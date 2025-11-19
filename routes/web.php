@@ -11,6 +11,7 @@ use App\Http\Controllers\PerfilEstudianteController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\Admin\ReporteController;
+use Illuminate\Support\Facades\Mail;
 
 // Página de bienvenida
 Route::get('/', function () {
@@ -31,6 +32,31 @@ Route::get('/dashboard', function () {
 
     abort(403, 'Rol no válido');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/test-mail', function () {
+    Mail::raw('Correo de prueba desde Brevo + Laravel', function ($message) {
+        $message->to('tu_correo@unah.edu.hn')
+                ->subject('Prueba SMTP desde Laravel con Brevo');
+    });
+
+    return 'Correo enviado (o intentado). Revisa tu bandeja.';
+});
+
+
+
+
+
+
 
 // ======================= ADMIN =======================
 Route::middleware(['auth', 'verified', 'rol:admin'])
