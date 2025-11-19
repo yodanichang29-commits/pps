@@ -26,40 +26,30 @@ function togglePassword(inputId, iconId) {
 function validarFormularioCrear() {
     const nombre = document.getElementById('crear_nombre').value.trim();
     const email = document.getElementById('crear_email').value.trim();
-    const password = document.getElementById('crear_password').value;
-    const passwordConfirm = document.getElementById('crear_password_confirmation').value;
     const maxEstudiantes = document.getElementById('crear_max_estudiantes').value;
-    
+
     const errores = [];
-    
+
     // Validar nombre
     if (nombre.length < 3) {
         errores.push('El nombre debe tener al menos 3 caracteres');
     }
-    
+
     // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         errores.push('El correo electrónico no es válido');
     }
-    
-    // Validar contraseña
-    if (password.length < 8) {
-        errores.push('La contraseña debe tener al menos 8 caracteres');
-    }
-    
-    // Validar confirmación de contraseña
-    if (password !== passwordConfirm) {
-        errores.push('Las contraseñas no coinciden');
-    }
-    
+
     // Validar capacidad
-    if (maxEstudiantes < 1 || maxEstudiantes > 100) {
+    const maxNum = parseInt(maxEstudiantes, 10);
+    if (isNaN(maxNum) || maxNum < 1 || maxNum > 100) {
         errores.push('La capacidad debe estar entre 1 y 100');
     }
-    
+
     return errores;
 }
+
 
 function validarFormularioEditar() {
     const nombre = document.getElementById('edit_nombre').value.trim();
@@ -67,7 +57,7 @@ function validarFormularioEditar() {
     const password = document.getElementById('edit_password').value;
     const passwordConfirm = document.getElementById('edit_password_confirmation').value;
     const maxEstudiantes = document.getElementById('edit_max_estudiantes').value;
-    
+const maxNum = parseInt(maxEstudiantes, 10);    
     const errores = [];
     
     // Validar nombre
@@ -93,9 +83,9 @@ function validarFormularioEditar() {
     }
     
     // Validar capacidad
-    if (maxEstudiantes < 1 || maxEstudiantes > 100) {
-        errores.push('La capacidad debe estar entre 1 y 100');
-    }
+   if (isNaN(maxNum) || maxNum < 1 || maxNum > 100) {
+    errores.push('La capacidad debe estar entre 1 y 100');
+}
     
     return errores;
 }

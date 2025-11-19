@@ -25,6 +25,23 @@
             </div>
             
 
+{{-- ⚠️ Mostrar botón solo cuando el usuario NO tiene contraseña --}}
+@if ($errors->has('email') && session('password_setup_email'))
+    <div class="mb-4 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded">
+        <p class="text-yellow-800 text-sm mb-3 font-semibold">
+            Este supervisor aún no tiene contraseña configurada.
+        </p>
+
+        <a href="{{ route('supervisor.password.create') }}"
+           class="block w-full text-center px-4 py-2 bg-unahblue text-white rounded-lg font-semibold hover:bg-unahgold transition">
+            Crear contraseña
+        </a>
+    </div>
+@endif
+
+
+
+
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 

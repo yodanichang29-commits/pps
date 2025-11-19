@@ -73,41 +73,9 @@
                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
             </div>
 
-            <div>
-                <label class="block text-sm font-bold text-gray-800 mb-2">
-                    Contraseña <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                    <input type="password" name="password" id="crear_password" required minlength="8"
-                           placeholder="Mínimo 8 caracteres"
-                           class="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
-                    <button type="button" onclick="togglePassword('crear_password', 'iconCrearPassword')" 
-                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition focus:outline-none">
-                        <svg id="iconCrearPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+           
 
-            <div>
-                <label class="block text-sm font-bold text-gray-800 mb-2">
-                    Confirmar contraseña <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                    <input type="password" name="password_confirmation" id="crear_password_confirmation" required minlength="8"
-                           placeholder="Repite la contraseña"
-                           class="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
-                    <button type="button" onclick="togglePassword('crear_password_confirmation', 'iconCrearPasswordConfirm')" 
-                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition focus:outline-none">
-                        <svg id="iconCrearPasswordConfirm" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+         
 
             <div>
                 <label class="block text-sm font-bold text-gray-800 mb-2">

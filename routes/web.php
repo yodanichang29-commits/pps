@@ -12,6 +12,9 @@ use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\Admin\ReporteController;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\PasswordSetupController;
+
 
 // Página de bienvenida
 Route::get('/', function () {
@@ -53,9 +56,32 @@ Route::get('/test-mail', function () {
 });
 
 
+// =================== AUTENTICACIÓN INVITADOS (SUPERVISORES SIN CONTRASEÑA) ===================
+Route::middleware(['auth', 'verified', 'rol:supervisor'])->group(function () {
+    Route::get('/supervisor/crear-password', [AuthenticatedSessionController::class, 'showCreatePasswordForm'])
+        ->name('supervisor.password.create');
+
+    Route::post('/supervisor/crear-password', [AuthenticatedSessionController::class, 'storeCreatePassword'])
+        ->name('supervisor.password.store');
+});
 
 
 
+
+Route::get('/supervisor/crear-password', function () {
+    // Luego aquí pondremos una vista bonita para crear la contraseña
+    return 'Aquí irá el formulario para que el supervisor cree su contraseña 😎';
+})->name('supervisor.password.create');
+
+
+
+Route::middleware('guest')->group(function () {
+    Route::get('/supervisor/crear-password', [PasswordSetupController::class, 'create'])
+        ->name('supervisor.password.create');
+
+    Route::post('/supervisor/crear-password', [PasswordSetupController::class, 'store'])
+        ->name('supervisor.password.store');
+});
 
 
 // ======================= ADMIN =======================

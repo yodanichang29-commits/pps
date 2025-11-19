@@ -67,6 +67,36 @@
             </div>
         @endif
 
+
+                {{-- DATOS DE ACCESO DEL NUEVO SUPERVISOR --}}
+        @if(session('temp_email') && session('temp_password'))
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-3 sm:p-4 rounded-lg shadow-md animate-fade-in">
+                <div class="flex items-start">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 mt-0.5 mr-2 sm:mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 5a1 1 0 10-2 0v3a1 1 0 00.293.707l2 2a1 1 0 001.414-1.414L11 9.586V7z" />
+                    </svg>
+                    <div>
+                        <p class="text-blue-800 font-semibold text-sm sm:text-base">
+                            Nuevo supervisor creado: credenciales temporales
+                        </p>
+                        <p class="text-blue-900 text-sm sm:text-base mt-1">
+                            <span class="font-semibold">Correo:</span>
+                            <span class="font-mono">{{ session('temp_email') }}</span>
+                        </p>
+                        <p class="text-blue-900 text-sm sm:text-base">
+                            <span class="font-semibold">Contraseña temporal:</span>
+                            <span class="font-mono">{{ session('temp_password') }}</span>
+                        </p>
+                        <p class="text-xs sm:text-sm text-blue-700 mt-1">
+                            Comparte estos datos al supervisor (WhatsApp, correo, etc.).  
+                            Luego puede cambiar su contraseña desde la opción de cambio de contraseña o “Olvidé tu contraseña”.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+
         {{-- ============================================
              SECCIÓN 3: FILTROS Y BÚSQUEDA
              ============================================ --}}

@@ -10,6 +10,7 @@ use App\Models\Supervisor;
 use App\Models\User;
 use App\Models\SolicitudPPS;
 
+
 class SupervisorController extends Controller
 {
     /**
@@ -91,63 +92,68 @@ public function index(Request $request)
     /**
      * Crear un nuevo supervisor
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'max_estudiantes' => 'required|integer|min:1|max:100',
-        ], [
-            'nombre.required' => 'El nombre es obligatorio',
-            'email.required' => 'El correo es obligatorio',
-            'email.unique' => 'Este correo ya está registrado',
-            'password.required' => 'La contraseña es obligatoria',
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres',
-            'password.confirmed' => 'Las contraseñas no coinciden',
-            'max_estudiantes.required' => 'La capacidad máxima es obligatoria',
-            'max_estudiantes.min' => 'La capacidad debe ser al menos 1',
-            'max_estudiantes.max' => 'La capacidad no puede superar 100',
+      /**
+     * Crear un nuevo supervisor
+     */
+  public function store(Request $request)
+{
+    // ✅ YA NO VALIDAMOS CONTRASEÑA AQUÍ
+    $request->validate([
+        'nombre'          => 'required|string|max:255',
+        'email'           => 'required|email|unique:users,email',
+        'max_estudiantes' => 'required|integer|min:1|max:100',
+    ], [
+        'nombre.required'          => 'El nombre es obligatorio',
+        'email.required'           => 'El correo es obligatorio',
+        'email.email'              => 'Ingresa un correo válido',
+        'email.unique'             => 'Este correo ya está registrado',
+        'max_estudiantes.required' => 'La capacidad máxima es obligatoria',
+        'max_estudiantes.min'      => 'La capacidad debe ser al menos 1',
+        'max_estudiantes.max'      => 'La capacidad no puede superar 100',
+    ]);
+
+    try {
+        \DB::beginTransaction();
+
+        // ✅ 1) Crear USUARIO SIN CONTRASEÑA (password = null)
+        $user = User::create([
+            'name'              => $request->nombre,
+            'email'             => $request->email,
+            'password'          => null,          // 🔥 CLAVE de todo el flujo
+            'rol'               => 'supervisor',
+            'cod_rol'           => 3,             // tu código de rol
+            'email_verified_at' => now(),         // ya lo das por verificado
         ]);
 
-        try {
-            \DB::beginTransaction();
+        // ✅ 2) Crear supervisor vinculado
+        $supervisor = Supervisor::create([
+            'user_id'         => $user->id,
+            'max_estudiantes' => $request->max_estudiantes,
+            'activo'          => 1,
+        ]);
 
-            // Crear usuario
-            $user = User::create([
-                'name' => $request->nombre,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'rol' => 'supervisor',
-                'cod_rol' => 3,  // Código de rol 
-                'email_verified_at' => now(),
-            ]);
+        \DB::commit();
 
-            // Crear supervisor
-            $supervisor = Supervisor::create([
-                'user_id' => $user->id,
-                'max_estudiantes' => $request->max_estudiantes,
-                'activo' => 1,
-            ]);
+        \Log::info('Supervisor creado: ' . $user->name . ' (ID: ' . $supervisor->id . ')');
 
-            \DB::commit();
+        // ✅ 3) Ya no mandamos temp_password, solo mensaje normal
+        return redirect()
+            ->route('admin.supervisores.index')
+            ->with('success', 'Supervisor ' . $user->name . ' creado exitosamente. 
+                Cuando inicie sesión por primera vez se le pedirá crear su contraseña.');
 
-            Log::info('Supervisor creado: ' . $user->name . ' (ID: ' . $supervisor->id . ')');
-
-            return redirect()
-                ->route('admin.supervisores.index')
-                ->with('success', 'Supervisor ' . $user->name . ' creado exitosamente');
-
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            
-            Log::error('Error al crear supervisor: ' . $e->getMessage());
-            
-            return back()
-                ->withInput()
-                ->with('error', 'Error al crear supervisor: ' . $e->getMessage());
-        }
+    } catch (\Exception $e) {
+        \DB::rollBack();
+        
+        \Log::error('Error al crear supervisor: ' . $e->getMessage());
+        
+        return back()
+            ->withInput()
+            ->with('error', 'Error al crear supervisor: ' . $e->getMessage());
     }
+}
+
+
 
     /**
      * Actualizar supervisor
