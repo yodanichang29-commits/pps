@@ -10,16 +10,16 @@ class CustomLoginResponse implements LoginResponseContract
     {
         $user = $request->user();
 
-        if ($user->hasRole('admin')) {
+        if ($user->rol === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
-        if ($user->hasRole('supervisor')) {
-            return redirect()->route('supervisores.dashboard');
+        if ($user->rol === 'supervisor') {
+            return redirect()->route('supervisor.dashboard');
         }
 
-        if ($user->hasRole('estudiante')) {
-            return redirect()->route('estudiantes.solicitud');
+        if ($user->rol === 'estudiante') {
+            return redirect()->route('estudiantes.dashboard');
         }
 
         return redirect()->intended(config('fortify.home'));

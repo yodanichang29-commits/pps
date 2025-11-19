@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
-use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -27,18 +26,20 @@ class RegisteredUserController extends Controller
             'password' => app(PasswordValidationRules::class)->rules(),
         ]);
     
+        // Asignar rol según correo
+        $rol = null;
+        if (str_ends_with($request->email, '@unah.hn')) {
+            $rol = 'estudiante';
+        } elseif (str_ends_with($request->email, '@unah.edu.hn')) {
+            $rol = 'supervisor';
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'rol' => $rol,
         ]);
-    
-        // Asignar rol según correo
-        if (str_ends_with($user->email, '@unah.hn')) {
-            $user->assignRole('estudiante');
-        } elseif (str_ends_with($user->email, '@unah.edu.hn')) {
-            $user->assignRole('supervisor');
-        }
     
         // Verificación de correo (si está habilitada)
         event(new Registered($user));

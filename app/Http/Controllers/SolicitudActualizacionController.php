@@ -202,7 +202,7 @@ class SolicitudActualizacionController extends Controller
 
         // Verificar que el usuario sea admin
         $user = Auth::user();
-        if (!$user || ($user->rol !== 'admin' && !$user->isAdmin())) {
+        if (!$user || !$user->isAdmin()) {
             abort(403, 'No autorizado.');
         }
 

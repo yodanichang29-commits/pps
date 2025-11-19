@@ -130,9 +130,8 @@ class DocumentoApiController extends Controller
     {
         $user = Auth::user();
 
-        $esAdmin      = method_exists($user, 'isAdmin') && $user->isAdmin();
-        $esSupervisor = method_exists($user, 'isSupervisor') && $user->isSupervisor()
-            && (int)($solicitud->supervisor_id ?? 0) === (int)($user->id);
+        $esAdmin      = $user->isAdmin();
+        $esSupervisor = $user->isSupervisor() && (int)($solicitud->supervisor_id ?? 0) === (int)($user->id);
         $esPropietario = (int)$solicitud->user_id === (int)$user->id;
 
         if (!($esAdmin || $esSupervisor || $esPropietario)) {

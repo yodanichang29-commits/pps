@@ -62,9 +62,9 @@ class DocumentoController extends Controller
 
         $solicitud = SolicitudPPS::with('documentos')->findOrFail($id);
 
-        $esAdmin      = ($user->rol === 'admin') || (method_exists($user, 'isAdmin') && $user->isAdmin());
-        $esSupervisor = ($user->rol === 'supervisor') || (method_exists($user, 'isSupervisor') && $user->isSupervisor());
-        $esEstudiante = ($user->rol === 'estudiante') || (method_exists($user, 'isEstudiante') && $user->isEstudiante());
+        $esAdmin      = $user->isAdmin();
+        $esSupervisor = $user->isSupervisor();
+        $esEstudiante = $user->isEstudiante();
 
         if ($esAdmin) {
             // admin ve todo
@@ -282,7 +282,7 @@ class DocumentoController extends Controller
             abort(403, 'Usuario no autenticado.');
         }
 
-        $esAdmin = ($user->rol === 'admin') || (method_exists($user, 'isAdmin') && $user->isAdmin());
+        $esAdmin = $user->isAdmin();
         $esDueno = (int)($documento->solicitud?->user_id) === (int)$user->id;
 
         if (!$esAdmin && !$esDueno) {
@@ -325,12 +325,12 @@ class DocumentoController extends Controller
         $sol = $documento->solicitud;
 
         // Admin
-        if (($user->rol === 'admin') || (method_exists($user, 'isAdmin') && $user->isAdmin())) {
+        if ($user->isAdmin()) {
             return;
         }
 
         // Supervisor asignado
-        if (($user->rol === 'supervisor') || (method_exists($user, 'isSupervisor') && $user->isSupervisor())) {
+        if ($user->isSupervisor()) {
             if ((int)($sol->supervisor_id ?? 0) === (int)$user->id) {
                 return;
             }
@@ -338,7 +338,7 @@ class DocumentoController extends Controller
         }
 
         // Estudiante dueño
-        if (($user->rol === 'estudiante') || (method_exists($user, 'isEstudiante') && $user->isEstudiante())) {
+        if ($user->isEstudiante()) {
             if ((int)$sol->user_id === (int)$user->id) {
                 return;
             }

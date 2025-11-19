@@ -10,7 +10,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 // Notificaciones personalizadas
 use App\Notifications\CustomVerifyEmail;
 use App\Notifications\CustomResetPassword;
@@ -20,7 +19,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
-    use HasRoles;
     use HasProfilePhoto;
     use HasTeams;
     use TwoFactorAuthenticatable;
@@ -32,10 +30,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'rol',                  // ✅ AGREGADO
+        'rol',
+        'es_supervisor',
         'cod_rol',
         'foto',
-        'email_verified_at',    // ✅ AGREGADO
+        'email_verified_at',
     ];
 
     /**
@@ -63,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'es_supervisor' => 'boolean',
         ];
     }
 
@@ -98,21 +98,39 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Helpers basados en Spatie
+     * Helpers basados en el campo 'rol'
      */
     public function isAdmin(): bool
     {
-        return $this->hasRole('admin');
+        return $this->rol === 'admin';
     }
 
     public function isSupervisor(): bool
     {
-        return $this->hasRole('supervisor');
+        return $this->rol === 'supervisor';
     }
 
     public function isEstudiante(): bool
     {
-        return $this->hasRole('estudiante');
+        return $this->rol === 'estudiante';
+    }
+
+    /**
+     * Verifica si el usuario puede supervisar estudiantes
+     * (ya sea supervisor de rol O admin con es_supervisor=true)
+     */
+    public function puedeSuperviar(): bool
+    {
+        return $this->rol === 'supervisor' || ($this->rol === 'admin' && $this->es_supervisor);
+    }
+
+    /**
+     * Verifica si tiene estudiantes asignados actualmente
+     */
+    public function tieneEstudiantesAsignados(): bool
+    {
+        return $this->supervisor()->exists() &&
+               $this->supervisor->solicitudes()->count() > 0;
     }
 
     /**

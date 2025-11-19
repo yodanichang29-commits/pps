@@ -27,6 +27,8 @@ class Supervisor extends Model
 
     /**
      * Un supervisor pertenece a un usuario
+     * NOTA: El user_id puede ser un usuario con rol 'supervisor' O un usuario
+     * con rol 'admin' que tenga es_supervisor=true
      */
     public function user()
     {

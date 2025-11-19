@@ -19,13 +19,16 @@ class CustomVerifyEmail extends BaseVerifyEmail
 
         return (new MailMessage)
             ->subject('Verificación de Correo Electrónico - PPS UNAH')
-            ->greeting('¡Hola ' . $notifiable->name . '!')
-            ->line(new HtmlString('<img src="' . asset('img/UNAH-version-horizontal.png') . '" alt="UNAH Logo" style="width: 150px; margin: 10px 0;">'))
-            ->line('Gracias por registrarte en el Sistema de Práctica Profesional Supervisada de la UNAH.')
-            ->line('Antes de continuar, necesitamos que confirmes tu dirección de correo electrónico.')
-            ->action('Verificar Correo', $verificationUrl)
-            ->line('Este enlace expirará en 60 minutos.')
-            ->line('Si no creaste una cuenta, no se requiere realizar ninguna acción.');
+            ->greeting('¡Hola, ' . $notifiable->name . '!')
+            ->line('Bienvenido/a al **Sistema de Práctica Profesional Supervisada** de la Universidad Nacional Autónoma de Honduras.')
+            ->line('Para poder acceder a todas las funcionalidades del sistema, necesitamos verificar tu dirección de correo electrónico institucional.')
+            ->line('Por favor, haz clic en el botón a continuación para confirmar tu cuenta:')
+            ->action('Verificar Correo Electrónico', $verificationUrl)
+            ->line('**Este enlace expirará en 60 minutos.**')
+            ->line('Si no creaste una cuenta en nuestro sistema, puedes ignorar este mensaje. No se realizará ninguna acción adicional.')
+            ->line('---')
+            ->line('Si tienes alguna duda o necesitas asistencia, por favor contacta al administrador del sistema.')
+            ->salutation('Atentamente,');
     }
 
     /**
