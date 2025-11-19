@@ -47,6 +47,7 @@ class SolicitudPPSController extends Controller
             'tipo_practica'     => 'required|in:normal,trabajo',
             'modalidad'         => 'nullable|in:presencial,semipresencial,teletrabajo',
             'numero_cuenta'     => 'required|string',
+              'celular'           => 'required|string|min:8|max:15', 
             'nombre_empresa'    => 'required|string',
             'direccion_empresa' => 'required|string',
             'nombre_jefe'       => 'required|string',

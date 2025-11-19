@@ -20,6 +20,7 @@ class SolicitudPPS extends Model
         'tipo_practica',
         'modalidad',
         'numero_cuenta',
+        'celular',
         'nombre_empresa',
         'direccion_empresa',
         'nombre_jefe',
@@ -35,7 +36,7 @@ class SolicitudPPS extends Model
         'observaciones',
         'motivo_cancelacion',
         'supervisor_id',
-        'telefono_alumno',
+        
     ];
 
     protected $casts = [
