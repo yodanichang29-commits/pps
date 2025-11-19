@@ -407,7 +407,8 @@
 
 
 {{-- ACCIONES RÁPIDAS / SUBIR CARTA DE FINALIZACIÓN --}}
-@if(in_array($solicitud->estado_solicitud, ['SOLICITADA', 'APROBADA']))
+{{-- ACCIONES RÁPIDAS / SUBIR CARTA DE FINALIZACIÓN --}}
+@if($solicitud && in_array($solicitud->estado_solicitud, ['SOLICITADA', 'APROBADA']))
     @php
         $tieneCartaFinalizacion = $solicitud->documentos->where('tipo', 'carta_finalizacion')->count() > 0;
     @endphp
@@ -661,7 +662,7 @@ function cerrarAlertaPermanente(alertId) {
                 </svg>
             </button>
         </div>
-        
+        @if ($solicitud ?? null)
         <form method="POST" action="{{ route('estudiantes.documentos.guardar') }}" enctype="multipart/form-data" class="p-6 space-y-4">
             @csrf
             
@@ -704,6 +705,7 @@ function cerrarAlertaPermanente(alertId) {
                 </button>
             </div>
         </form>
+        @endif
     </div>
 </div>
 
