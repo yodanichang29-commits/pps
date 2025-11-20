@@ -91,6 +91,10 @@ async function verDetalle(solicitudId) {
                             <p class="text-sm text-gray-600 font-semibold">Número de cuenta</p>
                             <p class="text-base text-gray-900 font-bold">${s.numero_cuenta || 'N/A'}</p>
                         </div>
+                        <div>
+    <p class="text-sm text-gray-600 font-semibold">Celular</p>
+    <p class="text-base text-gray-900 font-bold">${s.celular || 'N/A'}</p>
+</div>
                         <div class="sm:col-span-2">
                             <p class="text-sm text-gray-600 font-semibold">Correo electrónico</p>
                             <p class="text-base text-gray-900">${s.user.email}</p>

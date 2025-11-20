@@ -86,6 +86,7 @@ class SolicitudPPSController extends Controller
                 'tipo_practica'    => $request->input('tipo_practica'),
                 'modalidad'        => $request->input('modalidad'),
                 'numero_cuenta'    => $request->input('numero_cuenta'),
+                  'celular'          => $request->input('celular'), 
                 'nombre_empresa'   => $request->input('nombre_empresa'),
                 'direccion_empresa'=> $request->input('direccion_empresa'),
                 'nombre_jefe'      => $request->input('nombre_jefe'),

@@ -1,6 +1,6 @@
 {{-- Modal: Ver Detalle --}}
 <div id="modalDetalle" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto modal-content-scroll">
         <div class="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-t-xl sm:rounded-t-2xl flex items-center justify-between z-10">
             <h2 class="text-lg sm:text-xl lg:text-2xl font-bold">Detalle de Solicitud</h2>
             <button onclick="cerrarModal('modalDetalle')" class="text-white hover:text-gray-200 transition">
@@ -11,7 +11,7 @@
         </div>
         <div id="detalleContent" class="p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
             <div class="flex items-center justify-center py-12">
-                <svg class="animate-spin h-8 w-8 sm:h-10 sm:w-10 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin h-8 w-8 sm:h-10 sm:h-10 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -22,7 +22,7 @@
 
 {{-- Modal: Finalizar Práctica --}}
 <div id="modalFinalizar" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+    <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto modal-content-scroll" onclick="event.stopPropagation()">
         <div class="bg-gradient-to-r from-green-600 to-teal-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-t-xl sm:rounded-t-2xl">
             <h2 class="text-lg sm:text-xl lg:text-2xl font-bold">Finalizar Práctica Profesional</h2>
         </div>
@@ -74,7 +74,7 @@
 
 {{-- Modal: Cambiar Supervisor --}}
 <div id="modalCambiarSupervisor" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto modal-content-scroll">
         
         {{-- Header --}}
         <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-t-xl sm:rounded-t-2xl flex items-center justify-between sticky top-0 z-10">
@@ -164,6 +164,35 @@
 </div>
 
 <style>
+/* ===== SCROLLBAR PERSONALIZADA (MÁS VISIBLE) ===== */
+.modal-content-scroll {
+    overflow-y: scroll !important;{
+    scrollbar-width: thin;
+    scrollbar-color: rgba(59, 130, 246, 0.6) rgba(243, 244, 246, 0.3);
+}
+
+.modal-content-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.modal-content-scroll::-webkit-scrollbar-track {
+    background: rgba(243, 244, 246, 0.3);
+    border-radius: 10px;
+}
+
+.modal-content-scroll::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.6);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.modal-content-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.9);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
 /* Focus states para el select */
 #supervisorSelectCambio:focus {
     outline: none;
@@ -174,39 +203,6 @@
 /* Hover effects */
 #supervisorSelectCambio:hover {
     border-color: #c4b5fd;
-}
-
-/* Scrollbar personalizada */
-#modalDetalle > div,
-#modalCambiarSupervisor > div,
-#modalFinalizar > div {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
-}
-
-#modalDetalle > div::-webkit-scrollbar,
-#modalCambiarSupervisor > div::-webkit-scrollbar,
-#modalFinalizar > div::-webkit-scrollbar {
-    width: 6px;
-}
-
-#modalDetalle > div::-webkit-scrollbar-track,
-#modalCambiarSupervisor > div::-webkit-scrollbar-track,
-#modalFinalizar > div::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-#modalDetalle > div::-webkit-scrollbar-thumb,
-#modalCambiarSupervisor > div::-webkit-scrollbar-thumb,
-#modalFinalizar > div::-webkit-scrollbar-thumb {
-    background: rgba(156, 163, 175, 0.4);
-    border-radius: 10px;
-}
-
-#modalDetalle > div::-webkit-scrollbar-thumb:hover,
-#modalCambiarSupervisor > div::-webkit-scrollbar-thumb:hover,
-#modalFinalizar > div::-webkit-scrollbar-thumb:hover {
-    background: rgba(156, 163, 175, 0.6);
 }
 
 /* Animación de entrada */
