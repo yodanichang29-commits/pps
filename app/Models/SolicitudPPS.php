@@ -22,6 +22,7 @@ class SolicitudPPS extends Model
         'numero_cuenta',
         'celular',
         'nombre_empresa',
+        'tipo_empresa',
         'direccion_empresa',
         'nombre_jefe',
         'numero_jefe',

@@ -55,15 +55,7 @@
                                 <a href="{{ route('estudiantes.documentos.descargar', $doc->id) }}"
                                    class="px-3 py-1 rounded bg-unahgold text-unahblue text-sm hover:bg-yellow-400">Descargar</a>
 
-                                <form method="POST" action="{{ route('estudiantes.documentos.eliminar', $doc->id) }}"
-                                      onsubmit="return confirm('¿Eliminar este documento?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                            class="px-3 py-1 rounded bg-red-500 text-white text-sm hover:bg-red-600">
-                                        Eliminar
-                                    </button>
-                                </form>
+                               
                             </div>
                         </td>
                     </tr>

@@ -25,6 +25,21 @@ async function verExpediente(solicitudId) {
             const esNormal = s.tipo_practica === 'normal';
             const tipoPracticaLabel = esNormal ? 'Normal' : 'Por Trabajo';
             const tipoPracticaColor = esNormal ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800';
+
+
+
+// Tipo de empresa
+const tipoEmpresaHTML = s.tipo_empresa ? `
+    <div>
+        <p class="text-xs sm:text-sm text-gray-600 font-semibold">Tipo de Empresa</p>
+        <p class="text-sm sm:text-base text-gray-900 capitalize">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold ${s.tipo_empresa === 'publica' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
+                ${s.tipo_empresa === 'publica' ? 'Pública' : 'Privada'}
+            </span>
+        </p>
+    </div>
+` : '';
+
             
             // Campos específicos
             const camposEspecificos = esNormal ? `
@@ -161,15 +176,31 @@ async function verExpediente(solicitudId) {
                     </div>
                 </div>
 
-                <!-- Información del Estudiante -->
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                        Información del Estudiante
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              // ✅ Construir HTML de la foto del estudiante
+const fotoHTML = s.user.foto 
+    ? `<img src="{{ asset('storage/') }}/${s.user.foto}" 
+            alt="Foto de ${s.user.name}" 
+            class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-red-500 shadow-lg">`
+    : `<div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-red-500 to-rose-500 rounded-full flex items-center justify-center text-white font-bold text-2xl sm:text-3xl border-4 border-red-500 shadow-lg">
+            ${s.user.name.substring(0, 2).toUpperCase()}
+       </div>`;
+
+content.innerHTML = `
+    <!-- Información del Estudiante -->
+    <div class="bg-gradient-to-r from-red-50 to-rose-50 rounded-xl p-4 sm:p-6 border border-red-200">
+        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            Información del Estudiante
+        </h3>
+        
+        {{-- Foto del estudiante centrada --}}
+        <div class="flex justify-center mb-4">
+            ${fotoHTML}
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div>
                             <p class="text-sm text-gray-600 font-semibold">Nombre completo</p>
                             <p class="text-base text-gray-900 font-bold">${s.user.name}</p>
@@ -209,6 +240,7 @@ async function verExpediente(solicitudId) {
                             <p class="text-sm text-gray-600 font-semibold">Nombre de la empresa</p>
                             <p class="text-base text-gray-900">${s.nombre_empresa || 'N/A'}</p>
                         </div>
+                         ${tipoEmpresaHTML}
                         <div class="sm:col-span-2">
                             <p class="text-sm text-gray-600 font-semibold">Dirección</p>
                             <p class="text-base text-gray-900">${s.direccion_empresa || 'N/A'}</p>

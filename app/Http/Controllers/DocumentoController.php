@@ -269,48 +269,6 @@ class DocumentoController extends Controller
         abort(404, 'El archivo no existe en el servidor.');
     }
 
-    /**
-     * Eliminar un documento.
-     * NO permite eliminar carta_finalizacion una vez subida
-     */
-    public function destroy($id)
-    {
-        $documento = Documento::with('solicitud')->findOrFail($id);
-
-        $user = Auth::user();
-        if (!$user) {
-            abort(403, 'Usuario no autenticado.');
-        }
-
-        $esAdmin = $user->isAdmin();
-        $esDueno = (int)($documento->solicitud?->user_id) === (int)$user->id;
-
-        if (!$esAdmin && !$esDueno) {
-            abort(403, 'No autorizado para eliminar este documento.');
-        }
-
-        // NO permitir eliminar carta de finalización (solo admin puede forzarlo si es necesario)
-        if ($documento->tipo === 'carta_finalizacion' && !$esAdmin) {
-            return back()->with('error', 'No puedes eliminar la carta de finalización una vez subida. Contacta al administrador si necesitas cambiarla.');
-        }
-
-        try {
-            // Borrar en private y también en public por compatibilidad
-            Storage::disk('private')->delete($documento->ruta);
-            Storage::disk('public')->delete($documento->ruta);
-
-            $documento->delete();
-
-            Log::info('Documento eliminado: ID=' . $id . ' por usuario=' . $user->id);
-
-            return back()->with('success', 'Documento eliminado correctamente.');
-
-        } catch (\Exception $e) {
-            Log::error('Error al eliminar documento: ' . $e->getMessage());
-            
-            return back()->with('error', 'Error al eliminar el documento.');
-        }
-    }
 
     /**
      * Regla de autorización común (admin, supervisor asignado o propietario).

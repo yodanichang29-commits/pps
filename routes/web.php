@@ -230,7 +230,6 @@ Route::get('/formatos/{id}/view', [FormatoController::class, 'view'])
         Route::post('/documentos',               [DocumentoController::class, 'store'])->name('documentos.guardar');
         Route::get('/documentos/{id}/ver',       [DocumentoController::class, 'ver'])->whereNumber('id')->name('documentos.ver');
         Route::get('/documentos/{id}/descargar', [DocumentoController::class, 'descargar'])->whereNumber('id')->name('documentos.descargar');
-        Route::delete('/documentos/{documento}', [DocumentoController::class, 'destroy'])->whereNumber('documento')->name('documentos.eliminar');
 
         //  Ver documentos de una solicitud
         Route::get('/solicitudes/{id}/documentos', [SolicitudPPSController::class, 'verDocumentos'])
@@ -285,3 +284,6 @@ Route::middleware(['auth', 'verified', 'rol:supervisor'])
         });
         
     });
+
+    Route::post('/api/calcular-fecha-fin', [App\Http\Controllers\CalculadoraFechaController::class, 'calcular'])
+    ->middleware('web');

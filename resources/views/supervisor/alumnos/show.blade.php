@@ -69,17 +69,23 @@
             <div class="lg:col-span-1 space-y-4">
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <div class="flex flex-col items-center text-center mb-6">
-                        <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-3xl mb-4">
-                            {{ strtoupper(substr($solicitud->user->name, 0, 2)) }}
-                        </div>
+                    @if($solicitud->user->foto)
+    <img src="{{ asset('storage/' . $solicitud->user->foto) }}" 
+         alt="Foto de {{ $solicitud->user->name }}" 
+         class="w-auto h-32 max-w-xs rounded-lg object-contain border-4 border-blue-500 shadow-lg mb-4 mx-auto">
+@else
+    <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-3xl mb-4">
+        {{ strtoupper(substr($solicitud->user->name, 0, 2)) }}
+    </div>
+@endif
                         <h2 class="text-xl font-bold text-gray-900">{{ $solicitud->user->name }}</h2>
                         <p class="text-gray-600 mt-1">{{ $solicitud->user->email }}</p>
-                        @if($solicitud->telefono_alumno)
+                        @if($solicitud->celular)
                             <p class="text-gray-600 flex items-center gap-2 mt-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                                 </svg>
-                                {{ $solicitud->telefono_alumno }}
+                                {{ $solicitud->celular }}
                             </p>
                         @endif
                     </div>
@@ -151,6 +157,15 @@
                             <p class="text-xs text-gray-600 font-semibold uppercase mb-2">Nombre de la Empresa</p>
                             <p class="text-gray-900 font-bold">{{ $solicitud->nombre_empresa }}</p>
                         </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+    <p class="text-xs text-gray-600 font-semibold uppercase mb-2">Tipo de Empresa</p>
+    <p>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold 
+            {{ $solicitud->tipo_empresa === 'publica' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' }}">
+            {{ $solicitud->tipo_empresa === 'publica' ? '🏛️ Pública' : '🏢 Privada' }}
+        </span>
+    </p>
+</div>
                         <div class="p-4 bg-gray-50 rounded-lg">
                             <p class="text-xs text-gray-600 font-semibold uppercase mb-2">Puesto de Trabajo</p>
                             <p class="text-gray-900 font-semibold">{{ $solicitud->puesto_trabajo }}</p>

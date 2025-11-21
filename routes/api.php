@@ -64,4 +64,14 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 
     // Acción rápida “Actualizar datos” del perfil
     Route::patch('/me', [MeController::class, 'update']);
+
+
+
+
+
+    // Ruta para calcular fecha de finalización de PPS (800 horas)
+Route::post('/calcular-fecha-fin', [App\Http\Controllers\CalculadoraFechaController::class, 'calcular'])
+    ->middleware('web');
 });
+
+

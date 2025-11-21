@@ -71,6 +71,21 @@ async function verDetalle(solicitudId) {
                     <p class="text-sm sm:text-base text-gray-900 capitalize">${s.modalidad}</p>
                 </div>
             ` : '';
+
+
+// Tipo de empresa
+const tipoEmpresaHTML = s.tipo_empresa ? `
+    <div>
+        <p class="text-xs sm:text-sm text-gray-600 font-semibold">Tipo de Empresa</p>
+        <p class="text-sm sm:text-base text-gray-900 capitalize">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold ${s.tipo_empresa === 'publica' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
+                ${s.tipo_empresa === 'publica' ? 'Pública' : 'Privada'}
+            </span>
+        </p>
+    </div>
+` : '';
+
+
             
             // Campos específicos según tipo
             const camposEspecificos = esNormal ? `
@@ -197,12 +212,21 @@ async function verDetalle(solicitudId) {
                 'carta_finalizacion': 'Carta de Finalización'
             };
 
-            // Filtrar documentos
-            const docsIniciales = s.documentos.filter(d => ['carta_presentacion', 'carta_aceptacion', 'documento_ia01', 'documento_ia02', 'colegiacion', 'constancia_trabajo', 'constancia_aprobacion'].includes(d.tipo));
-            const docsFinalizacion = s.documentos.filter(d => d.tipo === 'carta_finalizacion');
-            
-            content.innerHTML = `
-                <!-- Alerta de Estado -->
+         // Filtrar documentos
+const docsIniciales = s.documentos.filter(d => ['carta_presentacion', 'carta_aceptacion', 'documento_ia01', 'documento_ia02', 'colegiacion', 'constancia_trabajo', 'constancia_aprobacion'].includes(d.tipo));
+const docsFinalizacion = s.documentos.filter(d => d.tipo === 'carta_finalizacion');
+
+// ✅ Construir HTML de la foto del estudiante (ANTES del content.innerHTML)
+const fotoHTML = s.user.foto 
+    ? `<img src="/storage/${s.user.foto}" 
+            alt="Foto de ${s.user.name}" 
+            class="w-auto h-32 sm:h-40 max-w-xs rounded-lg object-contain border-4 border-green-500 shadow-lg">`
+    : `<div class="w-24 h-32 sm:w-32 sm:h-40 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center text-white font-bold text-3xl sm:text-4xl border-4 border-green-500 shadow-lg">
+            ${s.user.name.substring(0, 2).toUpperCase()}
+       </div>`;
+
+content.innerHTML = `
+    <!-- Alerta de Estado -->
                 <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">
                     <div class="flex items-start">
                         <svg class="w-6 h-6 text-yellow-500 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -215,15 +239,21 @@ async function verDetalle(solicitudId) {
                     </div>
                 </div>
 
-                <!-- Información del Estudiante -->
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-6 border border-blue-200">
-                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                        Información del Estudiante
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+       
+    <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6 border border-green-200">
+        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            Información del Estudiante
+        </h3>
+        
+        <!-- Foto del estudiante centrada -->
+        <div class="flex justify-center mb-4">
+            ${fotoHTML}
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div>
                             <p class="text-xs sm:text-sm text-gray-600 font-semibold">Nombre completo</p>
                             <p class="text-sm sm:text-base text-gray-900 font-bold break-words">${s.user.name}</p>
@@ -266,6 +296,7 @@ async function verDetalle(solicitudId) {
                             <p class="text-xs sm:text-sm text-gray-600 font-semibold">Nombre de la empresa</p>
                             <p class="text-sm sm:text-base text-gray-900 break-words">${s.nombre_empresa || 'N/A'}</p>
                         </div>
+                         ${tipoEmpresaHTML}
                         <div class="sm:col-span-2">
                             <p class="text-xs sm:text-sm text-gray-600 font-semibold">Dirección</p>
                             <p class="text-sm sm:text-base text-gray-900 break-words">${s.direccion_empresa || 'N/A'}</p>

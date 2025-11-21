@@ -205,36 +205,79 @@
                                 </svg>
                                 Datos del Estudiante
                             </h3>
-                           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Número de Cuenta <span class="text-red-500">*</span></label>
-        <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
-                </svg>
-            </div>
-            <input type="text" name="numero_cuenta" required 
-                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                   placeholder="20201234567">
-        </div>
-    </div>
-    
-    {{-- NUEVO CAMPO CELULAR --}}
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Celular <span class="text-red-500">*</span></label>
-        <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                </svg>
-            </div>
-            <input type="text" name="celular" required 
-                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                   placeholder="99887766">
-        </div>
-    </div>
-</div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Número de Cuenta <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="numero_cuenta" required 
+                                               class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                               placeholder="20201234567">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Celular <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="celular" required 
+                                               class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                               placeholder="9999-9999">
+                                    </div>
+                                </div>
+                                
+                                {{-- NUEVO CAMPO: Foto del Estudiante (OBLIGATORIO y vista previa al lado) --}}
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Foto del Estudiante <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {{-- Área de carga --}}
+                                        <div class="relative">
+                                            <label for="foto_estudiante" class="flex items-center justify-center w-full px-4 py-6 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all">
+                                                <div class="flex flex-col items-center" id="area_carga">
+                                                    <svg class="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                    </svg>
+                                                    <span class="text-sm text-gray-600">Haz clic para subir tu foto</span>
+                                                    <span class="text-xs text-gray-500 mt-1">JPG, PNG o JPEG (máx. 2MB)</span>
+                                                </div>
+                                                <input type="file" 
+                                                       id="foto_estudiante" 
+                                                       name="foto_estudiante" 
+                                                       accept="image/jpeg,image/jpg,image/png" 
+                                                       required 
+                                                       class="hidden">
+                                            </label>
+                                        </div>
+                                        
+                                        {{-- Vista previa al lado --}}
+                                        <div id="vista_previa_foto" class="hidden">
+                                            <div class="flex flex-col items-center justify-center h-full p-4 bg-green-50 border-2 border-green-500 rounded-xl">
+                                                <img id="preview_imagen" src="" alt="Vista previa" class="w-32 h-32 rounded-full object-cover border-4 border-green-500 mb-3">
+                                                <div class="text-center">
+                                                    <p class="text-sm font-semibold text-green-800 truncate max-w-full" id="nombre_archivo_foto"></p>
+                                                    <p class="text-xs text-green-600 mt-1">Foto cargada correctamente</p>
+                                                </div>
+                                                <button type="button" onclick="eliminarVistaPrevia(); return false;" class="mt-3 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition text-sm font-medium">
+                                                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                    Eliminar foto
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         {{-- Información Empresa --}}
@@ -259,6 +302,24 @@
                                                placeholder="Sin abreviaturas: Ej. Tech Solutions S.A.">
                                     </div>
                                 </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Empresa <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                            </svg>
+                                        </div>
+                                        <select name="tipo_empresa" required 
+                                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none bg-white">
+                                            <option value="">Seleccione el tipo</option>
+                                            <option value="publica">Pública</option>
+                                            <option value="privada">Privada</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Dirección <span class="text-red-500">*</span></label>
                                     <div class="relative">
@@ -373,45 +434,62 @@
                                 </svg>
                                 Período de Práctica
                             </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Fecha de Inicio <span class="text-red-500">*</span></label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                            </svg>
-                                        </div>
-                                        <input type="date" name="fecha_inicio" 
-                                               class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Fecha de Finalización prevista<span class="text-red-500">*</span></label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                                            </svg>
-                                        </div>
-                                        <input type="date" name="fecha_fin" 
-                                               class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Horario <span class="text-red-500">*</span></label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                        </div>
-                                        <input type="text" name="horario" 
-                                               class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                               placeholder="8:00 AM - 5:00 PM">
-                                    </div>
-                                </div>
-                            </div>
+                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Fecha de Inicio <span class="text-red-500">*</span></label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <input type="date" name="fecha_inicio" id="fecha_inicio_input" required
+                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+        </div>
+    </div>
+    
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Horario <span class="text-red-500">*</span></label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <input type="text" name="horario" id="horario_input" required
+                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                   placeholder="8:00 AM - 5:00 PM">
+        </div>
+    </div>
+
+   <div class="flex items-end">
+  <button type="button" id="btn_calcular_fecha" 
+        class="w-full px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-base font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+        </svg>
+        Calcular
+    </button>
+</div>
+</div>
+
+{{-- Campo de fecha de finalización (inicialmente oculto) --}}
+<div id="resultado_calculo" class="hidden mt-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Fecha de Finalización prevista<span class="text-red-500">*</span></label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                </div>
+                <input type="date" name="fecha_fin" id="fecha_fin_calculada" readonly
+                       class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            </div>
+        </div>
+    </div>
+</div>
                         </div>
 
                         {{-- Observaciones --}}
@@ -574,7 +652,213 @@
 }
 </style>
 
-
 <script src="{{ asset('js/solicitud-form.js') }}"></script>
+
+{{-- ============================================ --}}
+{{-- SCRIPT PARA CALCULAR FECHA DE FINALIZACIÓN --}}
+{{-- ============================================ --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fechaInicioInput = document.getElementById('fecha_inicio_input');
+    const fechaFinInput = document.getElementById('fecha_fin_calculada');
+    const horarioInput = document.getElementById('horario_input');
+    const btnCalcular = document.getElementById('btn_calcular_fecha');
+    const resultadoDiv = document.getElementById('resultado_calculo');
+    
+    // Solo ejecutar si todos los elementos existen
+    if (!fechaInicioInput || !fechaFinInput || !horarioInput || !btnCalcular || !resultadoDiv) {
+        return;
+    }
+
+    // Función para calcular la fecha de finalización
+    async function calcularFechaFin() {
+        const fechaInicio = fechaInicioInput.value;
+        const horario = horarioInput.value;
+
+        // Validar que ambos campos tengan datos
+        if (!fechaInicio) {
+            alert('Por favor, ingresa la fecha de inicio');
+            fechaInicioInput.focus();
+            return;
+        }
+
+        if (!horario) {
+            alert('Por favor, ingresa el horario');
+            horarioInput.focus();
+            return;
+        }
+
+        // Mostrar loading en el botón
+        const textoOriginal = btnCalcular.innerHTML;
+        btnCalcular.disabled = true;
+        btnCalcular.innerHTML = `
+            <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Calculando...
+        `;
+
+        try {
+            // Llamar al backend para calcular
+            const response = await fetch('/api/calcular-fecha-fin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    fecha_inicio: fechaInicio,
+                    horario: horario
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                
+                // Actualizar el campo de fecha_fin
+                if (data.fecha_fin) {
+                    fechaFinInput.value = data.fecha_fin;
+                    
+                    // Mostrar el resultado
+                    resultadoDiv.classList.remove('hidden');
+                    
+                    // Mostrar mensaje informativo
+                    mostrarMensajeInfo(data);
+                    
+                    // Scroll suave hacia el resultado
+                    resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            } else {
+                alert('Error al calcular la fecha. Por favor, verifica el horario (formato: 8:00 AM - 5:00 PM)');
+            }
+        } catch (error) {
+            console.error('Error al calcular fecha:', error);
+            alert('Error al calcular la fecha. Por favor, intenta nuevamente.');
+        } finally {
+            // Restaurar botón
+            btnCalcular.disabled = false;
+            btnCalcular.innerHTML = textoOriginal;
+        }
+    }
+
+    // Función para mostrar mensaje informativo
+    function mostrarMensajeInfo(data) {
+        // Remover mensaje anterior si existe
+        const mensajeAnterior = document.getElementById('mensaje-calculo-fecha');
+        if (mensajeAnterior) {
+            mensajeAnterior.remove();
+        }
+
+        // Crear nuevo mensaje
+        const mensaje = document.createElement('div');
+        mensaje.id = 'mensaje-calculo-fecha';
+        mensaje.className = 'mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800';
+        mensaje.innerHTML = `
+            <div class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                    <p class="font-semibold mb-2">📊 Resumen del cálculo:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Días laborales:</strong> ${data.dias_laborales} días</li>
+                        <li><strong>Horas por día:</strong> ${data.horas_por_dia} horas</li>
+                        <li><strong>Fines de semana:</strong> ${data.fines_de_semana} días</li>
+                        <li><strong>Feriados (días hábiles):</strong> ${data.feriados} días</li>
+                        <li><strong>Total:</strong> 800 horas (excluyendo fines de semana y feriados)</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        // Insertar después del campo fecha_fin
+        resultadoDiv.appendChild(mensaje);
+    }
+
+    // Evento del botón calcular
+    btnCalcular.addEventListener('click', calcularFechaFin);
+    
+    // También permitir calcular con Enter en los campos
+    fechaInicioInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            calcularFechaFin();
+        }
+    });
+    
+    horarioInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            calcularFechaFin();
+        }
+    });
+});
+
+// ========== FUNCIONES PARA FOTO DEL ESTUDIANTE ==========
+document.addEventListener('DOMContentLoaded', function() {
+    const inputFoto = document.getElementById('foto_estudiante');
+    
+    if (inputFoto) {
+        // Agregar listener al input
+        inputFoto.addEventListener('change', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            mostrarVistaPrevia(this);
+        });
+    }
+});
+
+function mostrarVistaPrevia(input) {
+    const vistaPrevia = document.getElementById('vista_previa_foto');
+    const imagenPreview = document.getElementById('preview_imagen');
+    const nombreArchivo = document.getElementById('nombre_archivo_foto');
+    
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        
+        // Validar tamaño (máx 2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('El archivo es demasiado grande. El tamaño máximo es 2MB.');
+            input.value = '';
+            vistaPrevia.classList.add('hidden');
+            return false;
+        }
+        
+        // Validar tipo
+        if (!file.type.match('image/(jpeg|jpg|png)')) {
+            alert('Por favor selecciona un archivo de imagen válido (JPG, PNG, JPEG).');
+            input.value = '';
+            vistaPrevia.classList.add('hidden');
+            return false;
+        }
+        
+        // Mostrar vista previa
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagenPreview.src = e.target.result;
+            nombreArchivo.textContent = file.name;
+            vistaPrevia.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    } else {
+        vistaPrevia.classList.add('hidden');
+    }
+    
+    return false;
+}
+
+function eliminarVistaPrevia() {
+    const input = document.getElementById('foto_estudiante');
+    const vistaPrevia = document.getElementById('vista_previa_foto');
+    const imagenPreview = document.getElementById('preview_imagen');
+    
+    input.value = '';
+    imagenPreview.src = '';
+    vistaPrevia.classList.add('hidden');
+    
+    return false;
+}
+</script>
 
 @endsection

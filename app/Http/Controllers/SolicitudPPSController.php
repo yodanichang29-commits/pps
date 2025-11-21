@@ -47,8 +47,9 @@ class SolicitudPPSController extends Controller
             'tipo_practica'     => 'required|in:normal,trabajo',
             'modalidad'         => 'nullable|in:presencial,semipresencial,teletrabajo',
             'numero_cuenta'     => 'required|string',
-              'celular'           => 'required|string|min:8|max:15', 
+            'celular'   => 'required|string|max:255',
             'nombre_empresa'    => 'required|string',
+            'tipo_empresa'      => 'required|in:publica,privada',
             'direccion_empresa' => 'required|string',
             'nombre_jefe'       => 'required|string',
             'numero_jefe'       => 'required|string',
@@ -59,6 +60,9 @@ class SolicitudPPSController extends Controller
             'fecha_fin'         => 'nullable|date|after_or_equal:fecha_inicio',
             'horario'           => 'nullable|string',
             'observacion'       => 'nullable|string|max:1000',
+
+            // ✅ VALIDACIÓN DE FOTO
+            'foto_estudiante'   => 'required|image|mimes:jpeg,jpg,png|max:2048',
 
             // Documentos opcionales
             'documento_ia01'        => 'nullable|file|mimes:pdf|max:2048',
@@ -80,14 +84,34 @@ class SolicitudPPSController extends Controller
                 ->with('error', 'Ya tienes una solicitud activa. Espera a que sea revisada o cancélala.');
         }
 
+        // ========== PROCESAR FOTO DEL ESTUDIANTE (FUERA de la transacción) ==========
+        if ($request->hasFile('foto_estudiante')) {
+            $user = Auth::user();
+            
+            // Eliminar foto anterior si existe
+            if ($user->foto) {
+                Storage::disk('public')->delete($user->foto);
+            }
+            
+            // Guardar nueva foto
+            $foto = $request->file('foto_estudiante');
+            $fotoPath = $foto->store('fotos/fotos_estudiantes', 'public');
+            
+            // Actualizar foto en tabla users
+            $user->foto = $fotoPath;
+            $user->save();
+        }
+
+        // ========== CREAR SOLICITUD Y DOCUMENTOS (DENTRO de la transacción) ==========
         DB::transaction(function () use ($request) {
             $solicitud = SolicitudPPS::create([
                 'user_id'          => Auth::id(),
                 'tipo_practica'    => $request->input('tipo_practica'),
                 'modalidad'        => $request->input('modalidad'),
                 'numero_cuenta'    => $request->input('numero_cuenta'),
-                  'celular'          => $request->input('celular'), 
+                'celular'  => $request->input('celular'),
                 'nombre_empresa'   => $request->input('nombre_empresa'),
+                'tipo_empresa'     => $request->input('tipo_empresa'),
                 'direccion_empresa'=> $request->input('direccion_empresa'),
                 'nombre_jefe'      => $request->input('nombre_jefe'),
                 'numero_jefe'      => $request->input('numero_jefe'),
@@ -132,9 +156,6 @@ class SolicitudPPSController extends Controller
 
     /**
      * Cancelar una solicitud de práctica.
-     * - Marca la solicitud como CANCELADA
-     * - Elimina archivos físicos y registros de documentos relacionados
-     * - Aplica soft delete a la solicitud
      */
     public function cancelar(Request $request, $id)
     {
@@ -148,7 +169,7 @@ class SolicitudPPSController extends Controller
         }
 
         DB::transaction(function () use ($request, $solicitud) {
-            // Registrar solicitud de cancelación (queda PENDIENTE para admin)
+            // Registrar solicitud de cancelación
             DB::table('solicitudes_cancelacion')->insert([
                 'user_id'    => Auth::id(),
                 'motivo'     => $request->input('motivo', 'Cancelación solicitada por el estudiante'),
@@ -157,7 +178,7 @@ class SolicitudPPSController extends Controller
                 'updated_at' => now(),
             ]);
 
-            // 🔥 Eliminar documentos asociados
+            // Eliminar documentos asociados
             foreach ($solicitud->documentos as $doc) {
                 Storage::disk('private')->delete($doc->ruta);
                 $doc->delete();
@@ -190,7 +211,7 @@ class SolicitudPPSController extends Controller
     }
 
     /**
-     * 📄 Ver documentos asociados a una solicitud.
+     * Ver documentos asociados a una solicitud.
      */
     public function verDocumentos($id)
     {
@@ -207,7 +228,7 @@ class SolicitudPPSController extends Controller
     }
 
     /**
-     * 👁️ Ver documento individual.
+     * Ver documento individual.
      */
     public function ver($id)
     {
@@ -221,7 +242,7 @@ class SolicitudPPSController extends Controller
     }
 
     /**
-     * ⬇️ Descargar documento.
+     * Descargar documento.
      */
     public function descargar($id)
     {
@@ -235,7 +256,7 @@ class SolicitudPPSController extends Controller
     }
 
     /**
-     * ❌ Eliminar documento.
+     * Eliminar documento.
      */
     public function eliminar($id)
     {
